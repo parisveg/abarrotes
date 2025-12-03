@@ -19,7 +19,7 @@ class Producto {
     Producto();
     Producto(string nombre, double precio);
 
-    bool estaLote()
+    bool estaLote();
     void agregarLote();
     void quitarLote();
     int cantidadLotes();

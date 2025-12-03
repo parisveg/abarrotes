@@ -28,8 +28,15 @@ void getInput(double& var) {
     }while(!isInputValid());
 }
 
-void getInput(float& var) {
+void getInput(string& var) {
     do {
         cin >> var;
     }while(!isInputValid());
+}
+
+void getRange(int &var, int min, int max) {
+    do {
+        cin >> var;
+        if(var < min || var > max) cout << "Valor fuera de rango" << endl;
+    }while(!isInputValid() || var < min || var > max);
 }
