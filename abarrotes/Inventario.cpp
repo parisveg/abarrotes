@@ -3,35 +3,37 @@
 //
 
 #include "Inventario.h"
-#include <vector
+#include <vector>
 #include <string>
 
 using namespace std;
 
 Inventario::Inventario();
 
-void Produto::agregarProducto(Producto &producto){
+void Inventario::agregarProducto(Producto &producto){
     this->productos.push_back(producto);
 };
 
-bool Producto::estaProducto(string &nombre){
+bool Inventario::estaProducto(string &nombre){
     for (const auto& producto : this->productos) {
         if (producto.getNombre() == nombre) {return true;}
     }
     return false;
 }
 
-Producto Producto::getProducto(string &nombre){
+Producto Inventario::getProducto(string &nombre){
     for (const auto& producto : this->productos) {
         if (producto.getNombre() == nombre) {return producto;}
+    cout << "No se encontro el producto.\n";
+    return Producto();
+    }
 }
 
 void Inventario::quitarProducto(string &nombre){}
     for (int i = 0; i < this->productos.size(); ++i) {
         if (this->productos[i].getNombre() == nombre) {
-            this->productos.erase(lotes.begin()+i);
+            this->productos.erase(this->productos.begin()+i);
             return;
         }
     }
-    return contador;
 }
