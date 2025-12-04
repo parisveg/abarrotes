@@ -17,6 +17,9 @@ public:
     Lote();
     Lote(chrono::year_month_day, int , string);
 
+    int getCantidad();
+    string getId();
+
     bool estaCaducado();
     bool registrarVenta(int cantidadVendida);
 
