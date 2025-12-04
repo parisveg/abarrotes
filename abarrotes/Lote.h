@@ -19,7 +19,7 @@ public:
 
     int getCantidad();
     string getId();
-    auto getCaducidad();
+    chrono::year_month_day getCaducidad();
 
     bool estaCaducado();
     bool registrarVenta(int cantidadVendida);

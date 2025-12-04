@@ -30,7 +30,7 @@ void Producto::agregarLote(chrono::year_month_day caducidad, int cantidad, strin
 
 void Producto::quitarLote(string &id) {
     if (!estaLote(id)) {
-        cout << "El lote no existe.\n"
+        cout << "El lote no existe.\n";
         return;
     }
     for (int i = 0; i < this->lotes.size(); ++i) {
@@ -45,7 +45,7 @@ int Producto::cantidadLotes() {
     return this->lotes.size();
 }
 
-int Producto::quitarLotesCaducados()
+int Producto::quitarLotesCaducados(){
     int contador = 0;
     for (int i = 0; i < this->lotes.size(); ++i) {
         if (this->lotes[i].estaCaducado()) {
@@ -64,13 +64,14 @@ Lote Producto::getLotePrioridad(string &id) {
         return year_month_day{};
     }
     year_month_day masCercana = this->lotes[0].getCaducidad();
-
+    Lote lotePrioridad;
     for (int i = 1; i < this->lotes.size(); ++i) {
         if (this->lotes[i].getCaducidad() < masCercana) {
             masCercana = this->lotes[i].getCaducidad();
+            lotePrioridad = this->lotes[i];
         }
     }
-    return masCercana;
+    return lotePrioridad;
     }
 }
 
