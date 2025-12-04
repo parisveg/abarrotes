@@ -19,6 +19,7 @@ public:
 
     int getCantidad();
     string getId();
+    auto getCaducidad();
 
     bool estaCaducado();
     bool registrarVenta(int cantidadVendida);

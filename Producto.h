@@ -21,7 +21,7 @@ class Producto {
 
     bool estaLote();
     void agregarLote();
-    void quitarLote();
+    void quitarLote(string id);
     int cantidadLotes();
     int quitarLotesCaducados();
     Lote& getLotePrioridad();

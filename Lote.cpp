@@ -21,6 +21,10 @@ int Lote::getCantidad() {
     return cantidad;
 }
 
+auto Lote::getCaducidad() {
+    return caducidad;
+}
+
 string Lote::getId() {
     return id;
 }
