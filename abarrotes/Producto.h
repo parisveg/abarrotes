@@ -1,34 +1,38 @@
-//
-// Created by Laboratorio Vega on 02/12/2025.
-//
-
 #ifndef ABARROTES_PRODUCTO_H
 #define ABARROTES_PRODUCTO_H
+
 #include <string>
-#include <chrono>
 #include <vector>
+#include <chrono>
 #include "Lote.h"
+
 using namespace std;
+using namespace chrono;
 
 class Producto {
-    private:
-        string nombre;
-        double precio;
-        vector<Lote> lotes;
-    public:
-    Producto();
-    Producto(string nombre, double precio);
+private:
+    string nombre;
+    double precio;
+    vector<Lote> lotes;
 
-    string getNombre()const;
-    bool estaLote(string &id);
-    void agregarLote(chrono::year_month_day caducidad, int cantidad, string& id);
-    void quitarLote(string &id);
-    int cantidadLotes();
+public:
+    // Constructores
+    Producto();
+    Producto(const string& nombre, double precio);
+
+    // Destructor
+    ~Producto();
+
+    // Getters
+    string getNombre() const;
+
+    // Métodos
+    bool estaLote(const string &id) const;
+    void agregarLote(year_month_day caducidad, int cantidad, const string &id);
+    void quitarLote(const string &id);
+    int cantidadLotes() const;
     int quitarLotesCaducados();
     Lote& getLotePrioridad();
-
-    ~Producto();
 };
 
-
-#endif //ABARROTES_PRODUCTO_H
+#endif // ABARROTES_PRODUCTO_H
