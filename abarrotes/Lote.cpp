@@ -1,45 +1,48 @@
-//
-// Created by Laboratorio Vega on 02/12/2025.
-//
-
 #include "Lote.h"
 #include <chrono>
 #include <string>
+#include <iostream>
 
 using namespace std;
+using namespace chrono;
 
-Lote::Lote() {
-    caducidad = chrono::year_month_day{chrono::year{2025}, chrono::month{12}, chrono::day{31}};
-    cantidad = 0;
-    id = "";
-}
+// Constructores
+Lote::Lote()
+    : caducidad(year_month_day{year{2025}, month{12}, day{31}}),
+      cantidad(0),
+      id("") {}
 
-Lote::Lote(chrono::year_month_day cad, int cant, string id_)
+Lote::Lote(year_month_day cad, int cant, const string &id_)
     : caducidad(cad), cantidad(cant), id(id_) {}
 
-int Lote::getCantidad() {
+// Getters const
+int Lote::getCantidad() const {
     return cantidad;
 }
 
-auto Lote::getCaducidad() {
+const year_month_day& Lote::getCaducidad() const {
     return caducidad;
 }
 
-string Lote::getId() {
+const string& Lote::getId() const {
     return id;
 }
 
-bool Lote::estaCaducado() {
-    chrono::year_month_day hoy = chrono::year_month_day{chrono::floor<chrono::days>(chrono::system_clock::now())};
+// Revisar si el lote está caducado
+bool Lote::estaCaducado() const {
+    auto hoy_sys = floor<days>(system_clock::now());
+    year_month_day hoy{hoy_sys};
     return caducidad < hoy;
 }
 
+// Registrar venta
 bool Lote::registrarVenta(int cantidadVendida) {
-    if (cantidadVendida <= 0) return false;
-    if (cantidadVendida > cantidad) return false;
+    if (cantidadVendida <= 0 || cantidadVendida > cantidad)
+        return false;
 
     cantidad -= cantidadVendida;
     return true;
 }
 
+// Destructor
 Lote::~Lote() {}
