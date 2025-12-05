@@ -13,13 +13,30 @@ using namespace std::chrono;
 
 year_month_day pedirFecha() {
     int y, m, d;
-    cout << "Ingrese Anio";
-    getInput(y);
-    cout << "Ingrese Mes ";
-    getRange(m, 1, 12);
-    cout << "Ingrese Dia: ";
-    getRange(d, 1, 31);
-    return year_month_day{year{y}, month{m}, day{d}};
+    bool fechaValida;
+
+    do {
+        cout << "Ingrese Anio: ";
+        getInput(y);
+
+        cout << "Ingrese Mes (1-12): ";
+        getRange(m, 1, 12);
+
+        cout << "Ingrese Dia (1-31): ";
+        getRange(d, 1, 31);
+
+        year_month_day fecha{year{y}, month{static_cast<unsigned>(m)}, day{static_cast<unsigned>(d)}};
+
+        fechaValida = fecha.ok();
+        if (!fechaValida) {
+            cout << "Fecha invalida, intente de nuevo.\n";
+        } else {
+            return fecha;
+        }
+
+    } while (!fechaValida);
+
+    return year_month_day{};
 }
 
 void mostrarMenu() {
@@ -34,6 +51,7 @@ void mostrarMenu() {
 
 int main() {
     Inventario miInventario;
+    miInventario.cargarDesdeCSV("inventario.csv");
     int opcion = 0;
 
     while (opcion != 5) {
@@ -93,7 +111,7 @@ int main() {
 
             } else if (opcion == 3) {
                 string nombreProd;
-                cout << "\nConsultar Producto.\n"l;
+                cout << "\nConsultar Producto.\n";
                 cout << "Nombre del producto a buscar: ";
                 cin >> nombreProd;
 
