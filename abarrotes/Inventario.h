@@ -1,7 +1,3 @@
-//
-// Created by Laboratorio Vega on 02/12/2025.
-//
-
 #ifndef ABARROTES_INVENTARIO_H
 #define ABARROTES_INVENTARIO_H
 #include <vector>
@@ -15,10 +11,11 @@ class Inventario {
     public:
     Inventario();
 
-    void agregarProducto(Producto &producto);
-    bool estaProducto(string& nombre);
-    Producto& getProducto(string& nombre);
-    void quitarProducto(string &nombre);
+    void agregarProducto(const Producto &producto);
+    bool estaProducto(const string& nombre) const;
+    Producto& getProducto(const string& nombre);
+    void quitarProducto(const string &nombre);
+    void cargarDesdeCSV(const string& nombreArchivo);
 
     ~Inventario();
 };
