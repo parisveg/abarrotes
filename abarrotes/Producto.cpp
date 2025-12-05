@@ -1,78 +1,79 @@
-//
-// Created by Laboratorio Vega on 02/12/2025.
-//
-
 #include "Producto.h"
 #include <iostream>
 #include <chrono>
 #include <string>
 #include <vector>
 using namespace std;
+using namespace chrono;
 
-Producto::Producto():precio(0){}
+// Constructores
+Producto::Producto() : precio(0) {}
+Producto::Producto(const string& nombre, double precio) : nombre(nombre), precio(precio) {}
 
-Producto::Producto(string nombre, double precio):nombre(nombre), precio(precio){}
-
-string Producto::getNombre()const{
-    return this->nombre;
+// Getter nombre
+string Producto::getNombre() const {
+    return nombre;
 }
 
-bool Producto::estaLote(string &id) {
-    for (const auto& lote : this->lotes) {
-        if (lote.getId() == id) {return true;}
+// Verificar si existe lote
+bool Producto::estaLote(const string &id) const {
+    for (const auto& lote : lotes) {
+        if (lote.getId() == id) return true;
     }
     return false;
 }
 
-void Producto::agregarLote(chrono::year_month_day caducidad, int cantidad, string id) {
-    this->lotes.emplace_back(caducidad, cantidad, id);
+// Agregar lote
+void Producto::agregarLote(year_month_day caducidad, int cantidad, const string &id) {
+    lotes.emplace_back(caducidad, cantidad, id);
 }
 
-void Producto::quitarLote(string &id) {
+// Quitar lote por ID
+void Producto::quitarLote(const string &id) {
     if (!estaLote(id)) {
         cout << "El lote no existe.\n";
         return;
     }
-    for (int i = 0; i < this->lotes.size(); ++i) {
-        if (this->lotes[i].getId() == id) {
-            this->lotes.erase(lotes.begin()+i);
+    for (size_t i = 0; i < lotes.size(); ++i) {
+        if (lotes[i].getId() == id) {
+            lotes.erase(lotes.begin() + i);
             return;
         }
     }
 }
 
-int Producto::cantidadLotes() {
-    return this->lotes.size();
+// Cantidad de lotes
+int Producto::cantidadLotes() const {
+    return lotes.size();
 }
 
-int Producto::quitarLotesCaducados(){
+// Quitar lotes caducados
+int Producto::quitarLotesCaducados() {
     int contador = 0;
-    for (int i = 0; i < this->lotes.size(); ++i) {
-        if (this->lotes[i].estaCaducado()) {
-            this->lotes.erase(lotes.begin()+i);
+    for (size_t i = 0; i < lotes.size(); ++i) {
+        if (lotes[i].estaCaducado()) {
+            lotes.erase(lotes.begin() + i);
             contador++;
-            i--;
+            i--; // ajustar índice después de erase
         }
     }
     return contador;
 }
 
-
-
-Lote Producto::getLotePrioridad(string &id) {
-    if (this->lotes.empty()) {
-        return year_month_day{};
+// Obtener lote con caducidad más cercana (prioridad)
+Lote& Producto::getLotePrioridad() {
+    if (lotes.empty()) {
+        throw runtime_error("No hay lotes disponibles");
     }
-    year_month_day masCercana = this->lotes[0].getCaducidad();
-    Lote lotePrioridad;
-    for (int i = 1; i < this->lotes.size(); ++i) {
-        if (this->lotes[i].getCaducidad() < masCercana) {
-            masCercana = this->lotes[i].getCaducidad();
-            lotePrioridad = this->lotes[i];
+
+    size_t idx = 0;
+    for (size_t i = 1; i < lotes.size(); ++i) {
+        if (lotes[i].getCaducidad() < lotes[idx].getCaducidad()) {
+            idx = i;
         }
     }
-    return lotePrioridad;
-    }
+    return lotes[idx];
 }
 
-Producto::~Producto(){};
+// Destructor
+Producto::~Producto() {}
