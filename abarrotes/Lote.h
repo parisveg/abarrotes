@@ -1,31 +1,34 @@
-//
-// Created by Laboratorio Vega on 02/12/2025.
-//
-
 #ifndef ABARROTES_LOTE_H
 #define ABARROTES_LOTE_H
+
 #include <chrono>
 #include <string>
+
 using namespace std;
+using namespace chrono;
 
 class Lote {
 private:
-    chrono::year_month_day caducidad;
+    year_month_day caducidad;
     int cantidad;
     string id;
+
 public:
+    // Constructores
     Lote();
-    Lote(chrono::year_month_day, int , string);
+    Lote(year_month_day cad, int cant, const string &id_);
 
-    int getCantidad();
-    string getId();
-    chrono::year_month_day getCaducidad();
+    // Getters const
+    int getCantidad() const;
+    const string& getId() const;
+    const year_month_day& getCaducidad() const;
 
-    bool estaCaducado();
+    // Métodos
+    bool estaCaducado() const;
     bool registrarVenta(int cantidadVendida);
 
+    // Destructor
     ~Lote();
 };
 
-
-#endif //ABARROTES_LOTE_H
+#endif // ABARROTES_LOTE_H
